@@ -15,8 +15,10 @@ app.post("/create", async(req, res) => {
 
     const itemName = req.body.itemName;
     const quantity = req.body.quantity;
+    const barCode = req.body.barCode;
 
     const item = new InventoryModel({
+        barCode: barCode,
         itemName: itemName,
         quantity: quantity,
     });

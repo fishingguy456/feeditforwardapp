@@ -5,22 +5,27 @@ import Axios from "axios";
 function Inventory(props) {
     const [itemName, setItemName] = useState("");
     const [quantity, setQuantity] = useState("");
+    const [barCode, setbarCode] = useState("");
     const [itemList, setItemList] = useState([]);
     const [newItemName, setNewItemName] = useState("");
     const [newQuantity, setNewQuantity] = useState(0);
+    let result = props.results === "333" || props.results === "36663" ? "" : props.results;
     
     useEffect(() => {
         Axios.get("http://localhost:3001/read").then((response) => { //promise
-        setItemList(response.data);
+            console.log(props.results);
+            setbarCode(result);
+            setItemList(response.data);
         });
-    }, []);
+    }, [props.results, result]);
     const addItem = () => {
-        Axios.post("http://localhost:3001/create", {itemName: itemName, quantity: quantity,}).then(() => {
-        Axios.get("http://localhost:3001/getLatestId").then((response) => {
-            setItemList(itemList.concat({_id: response.data[0]._id, itemName: itemName, quantity: quantity}));
-            setItemName("");
-            setQuantity("");
-        });
+        Axios.post("http://localhost:3001/create", {barCode: barCode, itemName: itemName, quantity: quantity,}).then(() => {
+            Axios.get("http://localhost:3001/getLatestId").then((response) => {
+                setItemList(itemList.concat({_id: response.data[0]._id, barCode: barCode, itemName: itemName, quantity: quantity}));
+                setItemName("");
+                setQuantity("");
+                setbarCode("");
+            });
         });
         console.log("Item added to database");
     };
@@ -46,19 +51,25 @@ function Inventory(props) {
         const csv = itemList.map((item) => {
         return `${item._id},${item.itemName},${item.quantity}`;
         });
-        const csvString = "ID,\"Item Name\",Quantity\n" + csv.join("\n");
+        const csvString = "ID,\"Barcode\",\"Item Name\",Quantity\n" + csv.join("\n");
         const a = document.createElement("a");
         a.href = "data:text/csv;charset=utf-8," + encodeURI(csvString);
         a.download = "inventory.csv";
         a.click();
         console.log("CSV Downloaded");
     };
+
+
     return (
         <div className="App">
         <h1>Inventory Management Application</h1>
     
         <div className="form">
             <h1>Add an Item</h1>
+            <label>Barcode:</label>
+            <input type="text" name="barcode" value={barCode} onChange={(e) => {
+                setbarCode(e.target.value);
+            }} />
             <label>Item Name:</label>
             <input type="text" name="itemName" value={itemName} onChange={(event) => {
             setItemName(event.target.value);
@@ -74,6 +85,7 @@ function Inventory(props) {
             <table>
             <thead>
                 <tr>
+                <th>Barcode</th>
                 <th>Item Name</th>
                 <th>Quantity</th>
                 <th>Edit</th>
@@ -84,6 +96,7 @@ function Inventory(props) {
                 itemList.map((item, key) => {
                     return (
                     <tr key={key} className="listItem">
+                        <td>{item.barCode}</td>
                         <td>{item.itemName}</td>
                         <td>{item.quantity}</td>
                         <td>

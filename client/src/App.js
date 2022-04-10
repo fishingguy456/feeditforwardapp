@@ -1,5 +1,5 @@
 import "./App.css";
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 
 import Inventory from "./Inventory.js";
 import Scan from "./Scan.js";
@@ -21,9 +21,9 @@ function App() {
   */
  
   const eventhandler = data => {
-    if (data.results.length == 1) {
+    if (data.results.length === 1) {
       cur_screen = <Inventory results={data.results[0]["codeResult"]["code"]} />;
-      console.log(data.results[0]["codeResult"]["code"]);
+      // console.log(data.results[0]["codeResult"]["code"]);
       setScreen("inventory");
       flag = 1;
       data.results.pop();
@@ -33,10 +33,10 @@ function App() {
     }
   };
   
-  if (screen === "scan" && flag == 0) {
+  if (screen === "scan" && flag === 0) {
     cur_screen = <Scan onChange={eventhandler} />;
   }
-  else if (flag == 0) {
+  else if (flag === 0) {
     console.log(flag);
     cur_screen = <Inventory results="333"/>;
   }
