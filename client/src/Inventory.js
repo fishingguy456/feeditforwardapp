@@ -82,37 +82,37 @@ function Inventory(props) {
         </div>
             <h1>Current Inventory</h1>
             <table>
-            <thead>
-                <tr>
-                <th>Barcode</th>
-                <th>Item Name</th>
-                <th>Quantity</th>
-                <th>Edit</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                itemList.map((item, key) => {
-                    return (
-                    <tr key={key} className="listItem">
-                        <td>{item.barCode}</td>
-                        <td>{item.itemName}</td>
-                        <td>{item.quantity}</td>
-                        <td>
-                        <input type="text" placeholder="Updated Item Name" onChange={(event) => {
-                            setNewItemName(event.target.value);
-                        }}/>
-                        <input type="number" placeholder="Updated Quantity" onChange={(event) => {
-                            setNewQuantity(event.target.value);
-                        }}/>
-                        <button onClick={() => updateItem(item._id)}>Update</button>
-                        <button onClick={() => deleteItem(item._id)}>Delete</button>
-                        </td>
+                <thead>
+                    <tr>
+                    <th>Barcode</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Edit</th>
                     </tr>
-                    );
-                })
-                }
-            </tbody>
+                </thead>
+                <tbody>
+                    {
+                    itemList.map((item, key) => {
+                        return (
+                        <tr key={key} className="listItem">
+                            <td>{item.barCode}</td>
+                            <td>{item.itemName}</td>
+                            <td>{item.quantity}</td>
+                            <td>
+                            <input type="text" placeholder="Updated Item Name" style={{fontSize: "11px"}} onChange={(event) => {
+                                setNewItemName(event.target.value);
+                            }}/>
+                            <input type="number" placeholder="Updated Quantity" style={{fontSize: "11px"}} onChange={(event) => {
+                                setNewQuantity(event.target.value);
+                            }}/>
+                            <button onClick={() => updateItem(item._id)}>Update</button>
+                            <button onClick={() => deleteItem(item._id)}>Delete</button>
+                            </td>
+                        </tr>
+                        );
+                    })
+                    }
+                </tbody>
             </table>
             <button onClick={() => downloadCSV()}>Download to CSV</button>
         </div>  

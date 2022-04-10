@@ -32,7 +32,7 @@ class Scan extends Component {
               <Result key={result.codeResult.code + i} result={result} />
             ))}
           </ul>
-          {this.state.scanning ? <Scanner onDetected={this._onDetected} /> : null}
+          {this.state.scanning ? <Scanner id="scanner" onDetected={this._onDetected} /> : null}
         </div>
       )
     }
