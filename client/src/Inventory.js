@@ -1,4 +1,4 @@
-import "./App.css";
+import "./Inventory.css";
 import React, {useState, useEffect} from "react";
 import Axios from "axios";
 
@@ -49,7 +49,7 @@ function Inventory(props) {
     };
     const downloadCSV = () => {
         const csv = itemList.map((item) => {
-        return `${item._id},${item.itemName},${item.quantity}`;
+        return `"${item._id}","${item.barCode}","${item.itemName}","${item.quantity}"`;
         });
         const csvString = "ID,\"Barcode\",\"Item Name\",Quantity\n" + csv.join("\n");
         const a = document.createElement("a");
@@ -62,7 +62,7 @@ function Inventory(props) {
 
     return (
         <div className="App">
-        <h1>Inventory Management Application</h1>
+        <h1>Feed it Forward App</h1>
     
         <div className="form">
             <h1>Add an Item</h1>
@@ -79,7 +79,6 @@ function Inventory(props) {
             setQuantity(event.target.value);
             }}/>
             <button onClick={addItem}>Add Item</button>
-    
         </div>
             <h1>Current Inventory</h1>
             <table>

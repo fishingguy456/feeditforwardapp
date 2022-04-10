@@ -53,7 +53,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="App">
       <button onClick={changeScreen}>Switch Scan</button>
       {cur_screen}
     </div>
