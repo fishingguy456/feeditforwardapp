@@ -4,6 +4,9 @@ import React, {useState, useEffect} from "react";
 import Inventory from "./Inventory.js";
 import Scan from "./Scan.js";
 
+var cur_screen;
+var flag = 0;
+
 function App() {
 
   const [screen, setScreen] = useState("scan");
@@ -17,11 +20,10 @@ function App() {
   }
   */
  
-  let cur_screen;
-  let flag = 0;
   const eventhandler = data => {
     if (data.results.length == 1) {
-      cur_screen = <Inventory result={data.results[0]["codeResult"]["code"]} />;
+      cur_screen = <Inventory results={data.results[0]["codeResult"]["code"]} />;
+      console.log(data.results[0]["codeResult"]["code"]);
       setScreen("inventory");
       flag = 1;
       data.results.pop();
@@ -35,16 +37,17 @@ function App() {
     cur_screen = <Scan onChange={eventhandler} />;
   }
   else if (flag == 0) {
-    cur_screen = <Inventory />;
+    console.log(flag);
+    cur_screen = <Inventory results="333"/>;
   }
 
   const changeScreen = () => {
     if (screen === "scan") {
-      cur_screen = <Inventory />;
+      cur_screen = <Inventory results="36663"/>;
       setScreen("inventory");
     }
     else {
-      cur_screen = <Scan />;
+      cur_screen = <Scan onChange={eventhandler} />;
       setScreen("scan");
     }
   }
