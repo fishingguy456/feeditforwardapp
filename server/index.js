@@ -11,6 +11,10 @@ mongoose.connect("mongodb+srv://test:test@inventory.vjf7p.mongodb.net/inventory?
     useNewUrlParser: true,
 });
 
+app.listen(process.env.PORT || 3000, function(){
+    console.log("Server started");
+});
+
 app.post("/create", async(req, res) => {
 
     const itemName = req.body.itemName;
