@@ -1,0 +1,8 @@
+{
+    "name": "feeditforwardapp",
+    "description": "app for feed it forward",
+    "version": "1.0.0",
+    "engines": {
+      "node": "16.x"
+    }
+  }
