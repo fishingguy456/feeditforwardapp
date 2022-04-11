@@ -4,6 +4,8 @@ import React, {useState} from "react";
 import Inventory from "./Inventory.js";
 import Scan from "./Scan.js";
 
+import logo from "./images/feeditforwardlogo.png";
+
 var cur_screen;
 var flag = 0;
 
@@ -54,6 +56,10 @@ function App() {
 
   return (
     <div className="App">
+      <div className="header">
+        <h1>Feed it Forward Inventory Management System</h1>
+        <img className="logo" src={logo} alt="Feed It Forward Logo" />
+      </div>
       <button onClick={changeScreen}>Switch Scan</button>
       {cur_screen}
     </div>

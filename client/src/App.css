@@ -2,6 +2,14 @@ html{
   background-color: rgb(85, 191, 152);
 }
 
+.logo{
+  background-color: rgb(1, 37, 44);
+  border-radius: 20px;
+  width:50%;
+  height:50%;
+  margin-bottom: 20px;
+}
+
 .App {
   text-align: center;
   display: flex;

@@ -19,6 +19,11 @@ function Inventory(props) {
         });
     }, [props.results, result]);
     const addItem = () => {
+        console.log(itemList);
+        if(itemList.filter(e => e.barCode === barCode).length > 0 || itemList.filter(e => e.itemName === itemName).length > 0){
+            alert("Item already exists");
+            return;
+        }
         Axios.post("http://localhost:3001/create", {barCode: barCode, itemName: itemName, quantity: quantity,}).then(() => {
             Axios.get("http://localhost:3001/getLatestId").then((response) => {
                 setItemList(itemList.concat({_id: response.data[0]._id, barCode: barCode, itemName: itemName, quantity: quantity}));
@@ -29,12 +34,13 @@ function Inventory(props) {
         });
         console.log("Item added to database");
     };
-    const updateItem = (id) => {
-        Axios.put("http://localhost:3001/update", {_id: id, newItemName: newItemName, newQuantity: newQuantity,}).then(() => {
+    const updateItem = (id, barCode) => {
+        Axios.put("http://localhost:3001/update", {_id: id, barCode: barCode, newItemName: newItemName, newQuantity: newQuantity,}).then(() => {
         setItemList(itemList.map((item) => {
             if (item._id === id) {
-            item.itemName = newItemName;
-            item.quantity = newQuantity;
+                item.barCode = barCode;
+                item.itemName = newItemName;
+                item.quantity = newQuantity;
             }
             return item;
         }));
@@ -61,9 +67,7 @@ function Inventory(props) {
 
 
     return (
-        <div className="App">
-        <h1>Feed it Forward App</h1>
-    
+        <div className="App">    
         <div className="form">
             <h1>Add an Item</h1>
             <label>Barcode:</label>
@@ -105,8 +109,8 @@ function Inventory(props) {
                             <input type="number" placeholder="Updated Quantity" style={{fontSize: "11px"}} onChange={(event) => {
                                 setNewQuantity(event.target.value);
                             }}/>
-                            <button onClick={() => updateItem(item._id)}>Update</button>
-                            <button onClick={() => deleteItem(item._id)}>Delete</button>
+                            <button onClick={() => updateItem(item._id, item.barCode)}>Update</button>
+                            <button onClick={() => deleteItem(item._id, item.barCode)}>Delete</button>
                             </td>
                         </tr>
                         );

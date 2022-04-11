@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 // import ReactDOM from 'react-dom'
 import Scanner from './Scanner'
 import Result from './Result'
+import "./Scan.css";
 
 class Scan extends Component {
     state = {
