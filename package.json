@@ -2,6 +2,10 @@
     "name": "feeditforwardapp",
     "description": "app for feed it forward",
     "version": "1.0.0",
+    "scripts":{
+        "start": "cd client && npm i && npm run start",
+        "start-server": "cd server && npm i && npm run start"
+    },
     "engines": {
       "node": "16.x"
     }
