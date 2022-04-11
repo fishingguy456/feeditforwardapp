@@ -1,13 +1,21 @@
 {
-    "name": "feeditforwardapp",
-    "description": "app for feed it forward",
-    "version": "1.0.0",
-    "scripts":{
-        "start": "cd client && npm i && npm run start",
-        "start-server": "cd server && npm i && npm run start"
-    },
-    "engines": {
-      "node": "16.13.2",
-      "npm": "8.1.2"
-    }
+  "name": "feeditforwardapp",
+  "description": "app for feed it forward",
+  "version": "1.0.0",
+  "engines": {
+    "node": "16.13.2",
+    "npm": "8.1.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "mongoose": "^6.1.6",
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "frontend": "cd client && npm start",
+    "api": "cd server && nodemon index.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "cd client && npm install && npm run build"
   }
+}
