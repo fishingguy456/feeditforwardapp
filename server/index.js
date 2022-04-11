@@ -4,6 +4,21 @@ const cors = require("cors");
 const InventoryModel = require("./models/inventory");
 const app = express();
 
+const path = require("path");
+const port = process.env.PORT || 3001;
+
+if(process.emitWarning.NODE_ENV === "production"){
+    app.use(express.static(path.join(__dirname, "client", "src")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "client", "src", "index.html"));
+    });
+}
+
+app.listen(port, (err) => {
+    if(err) return console.log(err);
+    console.log(`Server is listening on port ${port}`);
+});
+
 app.use(express.json());
 app.use(cors());
 
@@ -11,9 +26,9 @@ mongoose.connect("mongodb+srv://test:test@inventory.vjf7p.mongodb.net/inventory?
     useNewUrlParser: true,
 });
 
-app.listen(3001, () => {
-    console.log("Server started");
-});
+// app.listen(3001, () => {
+//     console.log("Server started");
+// });
 
 app.post("/create", async(req, res) => {
 
