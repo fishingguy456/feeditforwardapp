@@ -11,7 +11,7 @@ mongoose.connect("mongodb+srv://test:test@inventory.vjf7p.mongodb.net/inventory?
     useNewUrlParser: true,
 });
 
-app.listen(process.env.PORT || 3000, function(){
+app.listen(process.env.PORT || 3001, () => {
     console.log("Server started");
 });
 
@@ -66,10 +66,6 @@ app.delete("/delete/:id", async (req, res) => {
     } catch(err){
         console.log(err);
     }
-});
-
-app.listen(3001, ()=>{
-    console.log("Server started at port 3001");
 });
 
 app.get("/getLatestId", async (req, res) => {
