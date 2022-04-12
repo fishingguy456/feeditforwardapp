@@ -1,22 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const InventoryModel = require("./models/inventory");
+const InventoryModel = require("./server/models/inventory");
 const app = express();
 
 const path = require("path");
 const port = process.env.PORT || 3001;
 
-if(process.emitWarning.NODE_ENV === "production"){
-    app.use(express.static(path.join(__dirname, "client", "src")));
-    app.get("*", (req, res) => {
-        res.sendFile(path.join(__dirname, "client", "public", "index.html"));
-    });
-}
-
 app.listen(port, (err) => {
     if(err) return console.log(err);
     console.log(`Server is listening on port ${port}`);
+});
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'src', 'index.html'))
 });
 
 app.use(express.json());
