@@ -1,31 +1,18 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const InventoryModel = require("./server/models/inventory");
+const InventoryModel = require("./models/inventory");
 const app = express();
 
 const path = require("path");
-const port = process.env.PORT || 3001;
-
-app.listen(port, (err) => {
-    if(err) return console.log(err);
-    console.log(`Server is listening on port ${port}`);
-});
-
-app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'src', 'index.html'))
-});
+const port = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect("mongodb+srv://test:test@inventory.vjf7p.mongodb.net/inventory?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://test:test@inventory.vjf7p.mongodb.net/inventory?retryWrites=true&w=majority", {
     useNewUrlParser: true,
 });
-
-// app.listen(3001, () => {
-//     console.log("Server started");
-// });
 
 app.post("/create", async(req, res) => {
 
@@ -89,3 +76,15 @@ app.get("/getLatestId", async (req, res) => {
         }
     });
 });
+
+app.listen(port, (err) => {
+    if(err) return console.log(err);
+    console.log(`Server is listening on port ${port}`);
+});
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static("client/build"));
+    // app.get("*", (req, res) => {
+    //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    // });
+}
