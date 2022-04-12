@@ -10,7 +10,11 @@ const port = process.env.PORT || 8080;
 app.use(express.json());
 app.use(cors());
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://test:test@inventory.vjf7p.mongodb.net/inventory?retryWrites=true&w=majority", {
+const uri = process.env.MONGODB_URI || "mongodb+srv://test:test@inventory.vjf7p.mongodb.net/inventory?retryWrites=true&w=majority";
+
+console.log(uri);
+
+mongoose.connect(uri, {
     useNewUrlParser: true,
 });
 
@@ -77,14 +81,12 @@ app.get("/getLatestId", async (req, res) => {
     });
 });
 
+app.use(express.static(path.join(__dirname, "client", "build")));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+// });
+
 app.listen(port, (err) => {
     if(err) return console.log(err);
     console.log(`Server is listening on port ${port}`);
 });
-
-if(process.env.NODE_ENV === "production"){
-    app.use(express.static("client/build"));
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-    });
-}

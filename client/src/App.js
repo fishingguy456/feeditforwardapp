@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import Inventory from "./Inventory.js";
 import Scan from "./Scan.js";
 
-import logo from "./images/feeditforwardlogo.png";
+import logo from "./feeditforwardlogo.png";
 
 var cur_screen;
 var flag = 0;
