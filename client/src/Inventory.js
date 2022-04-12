@@ -4,8 +4,9 @@ import Axios from "axios";
 
 function Inventory(props) {
     const [itemName, setItemName] = useState("");
-    const [quantity, setQuantity] = useState("");
+    const [quantity, setQuantity] = useState(0);
     const [barCode, setbarCode] = useState("");
+    const [site, setSite] = useState(0);
     const [itemList, setItemList] = useState([]);
     const [newItemName, setNewItemName] = useState("");
     const [newQuantity, setNewQuantity] = useState(0);
@@ -13,7 +14,7 @@ function Inventory(props) {
     const port = process.env.PORT || 8080;
     
     useEffect(() => {
-        Axios.get(`http://localhost:${port}/read`).then((response) => { //promise
+        Axios.get(`/read`).then((response) => { //promise
             console.log(props.results);
             setbarCode(result);
             setItemList(response.data);
@@ -25,21 +26,23 @@ function Inventory(props) {
             alert("Item already exists");
             return;
         }
-        Axios.post(`http://localhost:${port}/create`, {barCode: barCode, itemName: itemName, quantity: quantity,}).then(() => {
-            Axios.get(`http://localhost:${port}/getLatestId`).then((response) => {
-                setItemList(itemList.concat({_id: response.data[0]._id, barCode: barCode, itemName: itemName, quantity: quantity}));
+        Axios.post(`/create`, {barCode: barCode, site: site, itemName: itemName, quantity: quantity,}).then(() => {
+            Axios.get(`/getLatestId`).then((response) => {
+                setItemList(itemList.concat({_id: response.data[0]._id, barCode: barCode, site: site, itemName: itemName, quantity: quantity}));
+                setSite(0);
                 setItemName("");
-                setQuantity("");
+                setQuantity(0);
                 setbarCode("");
             });
         });
         console.log("Item added to database");
     };
-    const updateItem = (id, barCode) => {
-        Axios.put(`http://localhost:${port}/update`, {_id: id, barCode: barCode, newItemName: newItemName, newQuantity: newQuantity,}).then(() => {
+    const updateItem = (id, barCode, site) => {
+        Axios.put(`/update`, {_id: id, barCode: barCode, site: site, newItemName: newItemName, newQuantity: newQuantity,}).then(() => {
         setItemList(itemList.map((item) => {
             if (item._id === id) {
                 item.barCode = barCode;
+                item.site = site;
                 item.itemName = newItemName;
                 item.quantity = newQuantity;
             }
@@ -49,16 +52,16 @@ function Inventory(props) {
         console.log("Item updated in database");
     };
     const deleteItem = (id) => {
-        Axios.delete(`http://localhost:${port}/delete/${id}`).then(() => {
+        Axios.delete(`/delete/${id}`).then(() => {
         setItemList(itemList.filter((item) => item._id !== id));
         });
         console.log("Item deleted from database");
     };
     const downloadCSV = () => {
         const csv = itemList.map((item) => {
-        return `"${item._id}","${item.barCode}","${item.itemName}","${item.quantity}"`;
+        return `"${item._id}","${item.barCode}","${item.site}","${item.itemName}","${item.quantity}"`;
         });
-        const csvString = "ID,\"Barcode\",\"Item Name\",Quantity\n" + csv.join("\n");
+        const csvString = "ID,\"Barcode\",\"Site\",\"Item Name\",Quantity\n" + csv.join("\n");
         const a = document.createElement("a");
         a.href = "data:text/csv;charset=utf-8," + encodeURI(csvString);
         a.download = "inventory.csv";
@@ -75,6 +78,10 @@ function Inventory(props) {
             <input type="text" name="barcode" value={barCode} onChange={(e) => {
                 setbarCode(e.target.value);
             }} />
+            <label>Site:</label>
+            <input type="number" name="site" value={site} onChange={(e) => {
+                setSite(e.target.value);
+            }} />
             <label>Item Name:</label>
             <input type="text" name="itemName" value={itemName} onChange={(event) => {
             setItemName(event.target.value);
@@ -89,7 +96,7 @@ function Inventory(props) {
             <table>
                 <thead>
                     <tr>
-                    <th>Barcode</th>
+                    <th>Barcode and Site</th>
                     <th>Item Name</th>
                     <th>Quantity</th>
                     <th>Edit</th>
@@ -100,7 +107,7 @@ function Inventory(props) {
                     itemList.map((item, key) => {
                         return (
                         <tr key={key} className="listItem">
-                            <td>{item.barCode}</td>
+                            <td>{item.barCode}<br></br>(Site {item.site})</td>
                             <td>{item.itemName}</td>
                             <td>{item.quantity}</td>
                             <td>

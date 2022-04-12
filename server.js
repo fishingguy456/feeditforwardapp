@@ -23,9 +23,11 @@ app.post("/create", async(req, res) => {
     const itemName = req.body.itemName;
     const quantity = req.body.quantity;
     const barCode = req.body.barCode;
+    const site = req.body.site;
 
     const item = new InventoryModel({
         barCode: barCode,
+        site: site,
         itemName: itemName,
         quantity: quantity,
     });
@@ -85,7 +87,7 @@ app.use(express.static(path.join(__dirname, "client", "build")));
 // app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
 // });
-
+console.log(process.env.API_URL);
 app.listen(port, (err) => {
     if(err) return console.log(err);
     console.log(`Server is listening on port ${port}`);
