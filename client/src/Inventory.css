@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Monserrat', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .form{
@@ -14,24 +14,28 @@
     justify-content: center;
 }
 
+.form label{
+    font-size: 23px;
+}
+
 .form input {
     width: 300px;
     height: 30px;
     margin: 10px;
     font-size: 20px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Monserrat', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     border-radius: 8px;
     -moz-border-radius: 8px;
 }
 
-.form button {
+/* .form button {
     height: 30px;
     margin: 3px;
     font-size: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'Monserrat', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     border-radius: 8px;
     -moz-border-radius: 8px;
-}
+} */
 
 .listItem {
     border-style: solid;
@@ -41,10 +45,11 @@
 }
 
 .listItem button {
-    height: 30px;
+    height: 40px;
+    width: 85%;
     margin: 3px;
-    font-size: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    font-family: 'Monserrat', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     border-radius: 8px;
     -moz-border-radius: 8px;
 }

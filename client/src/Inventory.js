@@ -38,24 +38,28 @@ function Inventory(props) {
         console.log("Item added to database");
     };
     const updateItem = (id, barCode, site) => {
-        Axios.put(`/update`, {_id: id, barCode: barCode, site: site, newItemName: newItemName, newQuantity: newQuantity,}).then(() => {
-        setItemList(itemList.map((item) => {
-            if (item._id === id) {
-                item.barCode = barCode;
-                item.site = site;
-                item.itemName = newItemName;
-                item.quantity = newQuantity;
-            }
-            return item;
-        }));
-        });
-        console.log("Item updated in database");
+        if(window.confirm(`Are you sure you want to update this item to\nName:${newItemName}\nQuantity:${newQuantity}?`)){
+            Axios.put(`/update`, {_id: id, barCode: barCode, site: site, newItemName: newItemName, newQuantity: newQuantity,}).then(() => {
+            setItemList(itemList.map((item) => {
+                if (item._id === id) {
+                    item.barCode = barCode;
+                    item.site = site;
+                    item.itemName = newItemName;
+                    item.quantity = newQuantity;
+                }
+                return item;
+            }));
+            });
+            console.log("Item updated in database");
+        }
     };
     const deleteItem = (id) => {
-        Axios.delete(`/delete/${id}`).then(() => {
-        setItemList(itemList.filter((item) => item._id !== id));
-        });
-        console.log("Item deleted from database");
+        if(window.confirm("Are you sure you want to delete this item?")){
+            Axios.delete(`/delete/${id}`).then(() => {
+            setItemList(itemList.filter((item) => item._id !== id));
+            });
+            console.log("Item deleted from database");
+        }
     };
     const downloadCSV = () => {
         const csv = itemList.map((item) => {
