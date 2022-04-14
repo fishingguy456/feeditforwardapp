@@ -78,3 +78,8 @@ td {
 table {
     margin: 1fr;
 }
+
+
+#delete:hover{
+    background-color: red;
+}

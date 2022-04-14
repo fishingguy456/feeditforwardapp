@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.48851ec5.css",
-    "main.js": "/static/js/main.6986be53.js",
+    "main.css": "/static/css/main.52f70167.css",
+    "main.js": "/static/js/main.64125b80.js",
     "static/media/feeditforwardlogo.png": "/static/media/feeditforwardlogo.d5057a41831af1b2d239.png",
     "index.html": "/index.html",
-    "main.48851ec5.css.map": "/static/css/main.48851ec5.css.map",
-    "main.6986be53.js.map": "/static/js/main.6986be53.js.map"
+    "main.52f70167.css.map": "/static/css/main.52f70167.css.map",
+    "main.64125b80.js.map": "/static/js/main.64125b80.js.map"
   },
   "entrypoints": [
-    "static/css/main.48851ec5.css",
-    "static/js/main.6986be53.js"
+    "static/css/main.52f70167.css",
+    "static/js/main.64125b80.js"
   ]
 }

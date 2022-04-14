@@ -51,11 +51,11 @@ app.get("/read", async(req, res) => {
 
 app.put("/update", async(req, res) => {
     const id = req.body._id;
-    const newItemName = req.body.newItemName;
+    // const newItemName = req.body.newItemName;
     const newQuantity = req.body.newQuantity;
 
     try{
-        await InventoryModel.findByIdAndUpdate(id, {itemName: newItemName, quantity: newQuantity});
+        await InventoryModel.findByIdAndUpdate(id, {quantity: newQuantity});
         res.send("Item updated");
     } catch(err){
         console.log(err);

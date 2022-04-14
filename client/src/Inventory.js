@@ -8,7 +8,7 @@ function Inventory(props) {
     const [barCode, setbarCode] = useState("");
     const [site, setSite] = useState(0);
     const [itemList, setItemList] = useState([]);
-    const [newItemName, setNewItemName] = useState("");
+    // const [newItemName, setNewItemName] = useState("");
     const [newQuantity, setNewQuantity] = useState(0);
     let result = props.results === "333" || props.results === "36663" ? "" : props.results;
     const port = process.env.PORT || 8080;
@@ -38,13 +38,17 @@ function Inventory(props) {
         console.log("Item added to database");
     };
     const updateItem = (id, barCode, site) => {
-        if(window.confirm(`Are you sure you want to update this item to\nName:${newItemName}\nQuantity:${newQuantity}?`)){
-            Axios.put(`/update`, {_id: id, barCode: barCode, site: site, newItemName: newItemName, newQuantity: newQuantity,}).then(() => {
+        if(!newQuantity){
+            alert("Please enter a valid new quantity");
+            return;
+        }
+        if(window.confirm(`Are you sure you want to update this item to\nQuantity:${newQuantity}?`)){
+            Axios.put(`/update`, {_id: id, newQuantity: newQuantity,}).then(() => {
             setItemList(itemList.map((item) => {
                 if (item._id === id) {
-                    item.barCode = barCode;
-                    item.site = site;
-                    item.itemName = newItemName;
+                    // item.barCode = barCode;
+                    // item.site = site;
+                    // item.itemName = newItemName;
                     item.quantity = newQuantity;
                 }
                 return item;
@@ -115,14 +119,14 @@ function Inventory(props) {
                             <td>{item.itemName}</td>
                             <td>{item.quantity}</td>
                             <td>
-                            <input type="text" placeholder="Updated Item Name" style={{fontSize: "11px"}} onChange={(event) => {
+                            {/* <input type="text" placeholder="Updated Item Name" style={{fontSize: "11px"}} onChange={(event) => {
                                 setNewItemName(event.target.value);
-                            }}/>
+                            }}/> */}
                             <input type="number" placeholder="Updated Quantity" style={{fontSize: "11px"}} onChange={(event) => {
                                 setNewQuantity(event.target.value);
                             }}/>
                             <button onClick={() => updateItem(item._id, item.barCode)}>Update</button>
-                            <button onClick={() => deleteItem(item._id, item.barCode)}>Delete</button>
+                            <button id="delete" onClick={() => deleteItem(item._id, item.barCode)}>Delete</button>
                             </td>
                         </tr>
                         );
