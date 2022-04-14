@@ -57,7 +57,7 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <h1>Feed it Forward Inventory Management System</h1>
+        <h1>Stor-eat!: Feed it Forward Inventory Management System</h1>
         <img className="logo" src={logo} alt="Feed It Forward Logo" />
       </div>
       <button onClick={changeScreen}>Switch Scan</button>
