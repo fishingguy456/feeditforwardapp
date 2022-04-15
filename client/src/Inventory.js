@@ -10,7 +10,7 @@ function Inventory(props) {
     const [newItemName, setNewItemName] = useState("");
     const [newQuantity, setNewQuantity] = useState(0);
     let result = props.results === "333" || props.results === "36663" ? "" : props.results;
-    
+    // console.log(props.results[0] + " " + props.results[1]);
     useEffect(() => {
         Axios.get("http://localhost:3001/read").then((response) => { //promise
             console.log(props.results);
